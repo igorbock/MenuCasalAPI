@@ -1,0 +1,6 @@
+@LeitorNFC_HostAddress = http://localhost:5084
+
+GET {{LeitorNFC_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

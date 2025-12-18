@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "4NzEvU5jtTw=",
+  "success": true,
+  "projectFilePath": "D:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\igorb\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.11\\microsoft.aspnetcore.openapi.9.0.11.nupkg.sha512",
+    "C:\\Users\\igorb\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
