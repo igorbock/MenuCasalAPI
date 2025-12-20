@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj": {}
+    "D:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj": {}
   },
   "projects": {
-    "d:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj": {
+    "D:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj",
+        "projectUniqueName": "D:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj",
         "projectName": "LeitorNFC",
-        "projectPath": "d:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj",
+        "projectPath": "D:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj",
         "packagesPath": "C:\\Users\\igorb\\.nuget\\packages\\",
-        "outputPath": "d:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\obj\\",
+        "outputPath": "D:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

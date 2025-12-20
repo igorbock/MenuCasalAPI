@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zdoEkWH8REA=",
+  "dgSpecHash": "LQBhr7wOdjo=",
   "success": true,
-  "projectFilePath": "d:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj",
+  "projectFilePath": "D:\\Projetos\\Pessoal\\MenuCasalAPI\\LeitorNFC\\LeitorNFC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\igorb\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
     "C:\\Users\\igorb\\.nuget\\packages\\htmlagilitypack\\1.12.4\\htmlagilitypack.1.12.4.nupkg.sha512",

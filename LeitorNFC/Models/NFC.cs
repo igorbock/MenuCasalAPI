@@ -1,7 +1,7 @@
 ﻿namespace LeitorNFC.Models;
 
 [Table("NFC_COMPRA", Schema = "NFC")]
-public class NFC
+public class NFC : IEntity
 {
     [Key]
     public int Id { get; set; }
