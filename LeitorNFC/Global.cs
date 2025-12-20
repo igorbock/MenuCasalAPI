@@ -3,5 +3,8 @@ global using System.ComponentModel.DataAnnotations.Schema;
 
 global using System.Data;
 global using Npgsql;
+global using Dapper;
 
+global using LeitorNFC;
 global using LeitorNFC.Interfaces;
+global using LeitorNFC.Models;

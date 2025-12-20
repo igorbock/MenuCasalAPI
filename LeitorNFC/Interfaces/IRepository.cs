@@ -3,8 +3,8 @@
 public interface IRepository<TypeT> where TypeT : IEntity
 {
     public TypeT GetById(int id);
-    public IEnumerable<TypeT> GetAll(Func<TypeT, bool>? predicate = null);
-    public void Add(TypeT entity);
+    public Task<IEnumerable<TypeT>> GetAllAsync(Func<TypeT, bool>? predicate = null);
+    public Task AddAsync(TypeT entity);
     public void Update(TypeT entity);
     public void Delete(int id);
 }
