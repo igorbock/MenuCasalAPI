@@ -165,6 +165,22 @@
             "related": ".xml"
           }
         }
+      },
+      "Scalar.AspNetCore/2.11.10": {
+        "type": "package",
+        "compile": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -470,6 +486,25 @@
         "npgsql.nuspec",
         "postgresql.png"
       ]
+    },
+    "Scalar.AspNetCore/2.11.10": {
+      "sha512": "tkiZTK3pxiniTl9sVz5WY2bn8Y+vaFu9yo2Qrs4guMXoBB3wTbKwXIwFvcZnpantGeYxSk9/+UZ5BQ6eFG69Dw==",
+      "type": "package",
+      "path": "scalar.aspnetcore/2.11.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/net10.0/Scalar.AspNetCore.dll",
+        "lib/net10.0/Scalar.AspNetCore.xml",
+        "lib/net8.0/Scalar.AspNetCore.dll",
+        "lib/net8.0/Scalar.AspNetCore.xml",
+        "lib/net9.0/Scalar.AspNetCore.dll",
+        "lib/net9.0/Scalar.AspNetCore.xml",
+        "scalar.aspnetcore.2.11.10.nupkg.sha512",
+        "scalar.aspnetcore.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -478,7 +513,8 @@
       "HtmlAgilityPack >= 1.12.4",
       "Microsoft.AspNetCore.OpenApi >= 9.0.11",
       "Microsoft.Extensions.Configuration >= 10.0.1",
-      "Npgsql >= 10.0.1"
+      "Npgsql >= 10.0.1",
+      "Scalar.AspNetCore >= 2.11.10"
     ]
   },
   "packageFolders": {
@@ -554,6 +590,10 @@
           "Npgsql": {
             "target": "Package",
             "version": "[10.0.1, )"
+          },
+          "Scalar.AspNetCore": {
+            "target": "Package",
+            "version": "[2.11.10, )"
           }
         },
         "imports": [

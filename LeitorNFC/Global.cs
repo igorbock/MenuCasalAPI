@@ -6,6 +6,7 @@ global using System.Data;
 global using Npgsql;
 global using Dapper;
 global using HtmlAgilityPack;
+global using Scalar.AspNetCore;
 
 global using LeitorNFC;
 global using LeitorNFC.Interfaces;
