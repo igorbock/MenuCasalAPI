@@ -15,4 +15,6 @@ public class NFC : IEntity
 
     [StringLength(11)]
     public string? CPFConsumidor { get; set; }
+
+    public List<ItemNFC>? Itens { get; set; }
 }

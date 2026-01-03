@@ -20,7 +20,7 @@ public class LeitorController : ControllerBase
     {
         var retornoHTTP = await _httpClient.GetAsync(urlNFC);
         var retornoHTML = await retornoHTTP.Content.ReadAsStringAsync();
-        var itens = NFCService.ParseItens(retornoHTML);
-        return Ok(itens);
+        var nfc = NFCService.ParseNFC(retornoHTML);
+        return Ok(nfc);
     }
 }

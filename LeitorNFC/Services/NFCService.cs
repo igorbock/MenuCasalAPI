@@ -21,6 +21,8 @@ public static class NFCService
 
             var qtdText = row.SelectSingleNode(".//span[@class='Rqtd']")?.InnerText;
             var qtdDecimal = decimal.Parse(qtdText!.Split(":")[1]);
+            var strCod = row.SelectSingleNode(".//span[@class='RCod']")?.InnerText;
+            var codigo = strCod!.Trim('(', ')').Split(":", 2)[1].Trim();
             var unText  = row.SelectSingleNode(".//span[@class='RUN']")?.InnerText;
             var unidade = unText!.Split(":")[1].Trim();
             var vlUnit  = row.SelectSingleNode(".//span[@class='RvlUnit']")?.InnerText;
@@ -36,10 +38,35 @@ public static class NFCService
                 Quantidade = qtdDecimal,
                 Unidade = unidade,
                 ValorUnitario = valorUnitario,
-                ValorTotal = decimal.Parse(vlTotal!)
+                ValorTotal = decimal.Parse(vlTotal!),
+                Codigo = codigo
             });
         }
 
         return itens;
+    }
+
+    public static NFC ParseNFC(string html)
+    {
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+
+        var infos = doc.DocumentNode.SelectNodes("//*[@id='infos']");
+        var dataEmissao = infos[0].ChildNodes[0].ChildNodes[1].ChildNodes[0].ChildNodes[8]?.InnerText.Trim().Split("-", 2)[0].Trim();
+        var chaveAcesso = infos[0].ChildNodes[1].ChildNodes[1].ChildNodes[0].ChildNodes[5]?.InnerText;
+        var cpfConsumidor = infos[0].ChildNodes[2].ChildNodes[1].ChildNodes[0].ChildNodes[1]?.InnerText;
+        var nomeComercio = doc.DocumentNode.SelectSingleNode("//*[@id=\"u20\"]")?.InnerText;
+
+        var retorno = new NFC()
+        {
+            DataEmissao = DateTime.Parse(dataEmissao!),
+            ChaveAcesso = chaveAcesso!,
+            NomeComercio = nomeComercio!,
+            CPFConsumidor = cpfConsumidor
+        };
+
+        retorno.Itens = ParseItens(html);
+
+        return retorno;
     }
 }
