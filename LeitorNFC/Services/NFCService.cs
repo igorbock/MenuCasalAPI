@@ -57,7 +57,7 @@ public static class NFCService
         var div1 = infos[0].SelectSingleNode("//div[1]");
         var div3 = infos[0].SelectNodes("//div[3]");
         var dataEmissao = div1.SelectSingleNode("//div//ul//li//text()[3]")?.InnerText.Trim().Split("-", 2)[0].Trim();
-        var chaveAcesso = infos[0].SelectNodes("//div[2]//div/ul/li/span")[0]?.InnerText;
+        var chaveAcesso = infos[0].SelectNodes("//div[2]//div/ul/li/span")[0]?.InnerText.Replace(" ", "");
         var cpfConsumidor = Regex.Replace(div3[2].InnerText.Split(":", 2)[1], @"\D", "");
         var nomeComercio = doc.DocumentNode.SelectSingleNode("//*[@id=\"u20\"]")?.InnerText;
 
