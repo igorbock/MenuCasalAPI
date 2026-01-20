@@ -7,7 +7,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<DapperDbContext>();
+builder.Services.AddScoped<DapperDbContext>();
 builder.Services.AddScoped<IRepository<NFC>, CompraNFCRepository>();
 builder.Services.AddScoped<IRepository<ItemNFC>, ItemNFCRepository>();
 

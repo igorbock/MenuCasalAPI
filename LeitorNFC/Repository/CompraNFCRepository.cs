@@ -12,8 +12,17 @@ public class CompraNFCRepository : IRepository<NFC>
 
     public async Task AddAsync(NFC entity)
     {
-        string query = "INSERT INTO public.\"NFC\"(\"Id\", \"Data\", \"ValorTotal\", \"CNPJ\", \"RazaoSocial\") VALUES(@Id, @Data, @ValorTotal, @CNPJ, @RazaoSocial)";
-        await _context.DbConnection.ExecuteAsync(query, entity);
+        var novo_id = _context.DbConnection.QuerySingle<int>("SELECT nextval('nfc.nfc_compra_id_seq')");
+        var query = "INSERT INTO nfc.nfc_compra(id, data_emissao, chave_acesso, nome_comercio, cpf_consumidor) VALUES(@Id, @Data, @ChaveAcesso, @NomeComercio, @CPF)";
+        var parametros = new
+        {
+            id = novo_id,
+            Data = entity.DataEmissao,
+            ChaveAcesso = entity.ChaveAcesso,
+            NomeComercio = entity.NomeEmitente,
+            CPF = entity.CPFConsumidor
+        };
+        await _context.DbConnection.ExecuteAsync(query, parametros);
     }
 
     public void Delete(int id)
@@ -23,7 +32,7 @@ public class CompraNFCRepository : IRepository<NFC>
 
     public async Task<IEnumerable<NFC>> GetAllAsync(Func<NFC, bool>? predicate = null)
     {
-        string query = "SELECT * FROM public.\"NFC\"";
+        string query = "SELECT * FROM nfc.nfc_compra";
         return await _context.DbConnection.QueryAsync<NFC>(query);
     }
 

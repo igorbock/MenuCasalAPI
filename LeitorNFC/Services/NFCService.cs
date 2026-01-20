@@ -52,25 +52,71 @@ public static class NFCService
     {
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
-
-        var infos = doc.DocumentNode.SelectNodes("//*[@id='infos']");
-        var div1 = infos[0].SelectSingleNode("//div[1]");
-        var div3 = infos[0].SelectNodes("//div[3]");
-        var dataEmissao = div1.SelectSingleNode("//div//ul//li//text()[3]")?.InnerText.Trim().Split("-", 2)[0].Trim();
-        var chaveAcesso = infos[0].SelectNodes("//div[2]//div/ul/li/span")[0]?.InnerText.Replace(" ", "");
-        var cpfConsumidor = Regex.Replace(div3[2].InnerText.Split(":", 2)[1], @"\D", "");
-        var nomeComercio = doc.DocumentNode.SelectSingleNode("//*[@id=\"u20\"]")?.InnerText;
+        // Conteúdo principal
+        var conteudo = doc.DocumentNode.SelectSingleNode(@"//*[@id=""conteudo""]");
+        // Cabeçalho com informações do Emitente
+        var htmlConteudo = new HtmlDocument();
+        htmlConteudo.LoadHtml(conteudo.InnerHtml);
+        // Obtendo informações
+        var nomeEmitente = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@id=""u20""]").InnerText.Trim();
+        var cnpjEmitente = SomenteNumeros(LimparTexto(htmlConteudo.DocumentNode.SelectSingleNode(@"//div[1]/div[2]").InnerText));
+        var enderecoEmitente = LimparTexto(htmlConteudo.DocumentNode.SelectSingleNode(@"//div[1]/div[3]").InnerText);
+        // Tabela com informações gerais
+        var infosHTML = doc.DocumentNode.SelectSingleNode(@"//*[@id=""infos""]");
+        //*[@id="infos"]
+        var infoGerais = new HtmlDocument();
+        infoGerais.LoadHtml(infosHTML.InnerHtml);
+        // Informações gerais da nota
+        var tipoEmissao = infoGerais.DocumentNode.SelectSingleNode(@"//li/strong[1]").InnerText.Trim();
+        var numero = infoGerais.DocumentNode.SelectSingleNode(@"//li/text()[1]").InnerText.Trim();
+        var serie = infoGerais.DocumentNode.SelectSingleNode(@"//li/text()[2]").InnerText.Trim();
+        var dataEmissaoRaw = infoGerais.DocumentNode.SelectSingleNode(@"//li/text()[3]").InnerText.Split(" ");
+        var dataEmissao = LimparTexto($"{dataEmissaoRaw[0]} {dataEmissaoRaw[1].Replace("-", "")}");
+        var protocoloAutorizacaoRaw = LimparTexto(infoGerais.DocumentNode.SelectSingleNode(@"//li/text()[4]").InnerText).Split(" ");
+        var protocoloAutorizacao = LimparTexto(protocoloAutorizacaoRaw[0]);
+        var dataProtocoloAutorizacao = LimparTexto($"{protocoloAutorizacaoRaw[1]} {protocoloAutorizacaoRaw[3]}");
+        var ambiente = LimparTexto(infoGerais.DocumentNode.SelectSingleNode(@"//li/strong[6]/text()").InnerText);
+        // Chave de acesso
+        var chaveAcesso = infoGerais.DocumentNode.SelectSingleNode(@"//li/span").InnerText.Trim().Replace(" ", "");
+        // Consumidor
+        var cpf = SomenteNumeros(infoGerais.DocumentNode.SelectSingleNode(@"//div[3]/ul/li/text()[1]").InnerText);
+        var nome = infoGerais.DocumentNode.SelectSingleNode(@"div[3]/ul/li[2]/strong").InnerText.Split(":")[1].Trim();
+        // Informações de interesse do contribuinte
+        var infoContribuinteRaw = infoGerais.DocumentNode.SelectSingleNode(@"//div[4]/ul/li").InnerText.Split(" ");
+        var tribAprox = infoContribuinteRaw[3];
+        var tribFed = infoContribuinteRaw[5];
 
         var retorno = new NFC()
         {
+            NomeEmitente = nomeEmitente!,
+            CNPJEmitente = cnpjEmitente,
+            EnderecoEmitente = enderecoEmitente,
+            TipoEmissao = tipoEmissao,
+            Numero = int.Parse(numero),
+            Serie = serie,
             DataEmissao = DateTime.Parse(dataEmissao!),
+            ProtocoloAutorizacao = protocoloAutorizacao,
+            DataProtocoloAutorizacao = DateTime.Parse(dataProtocoloAutorizacao),
+            Ambiente = ambiente,
             ChaveAcesso = chaveAcesso!,
-            NomeComercio = nomeComercio!,
-            CPFConsumidor = cpfConsumidor == "" ? null : cpfConsumidor
+            CPFConsumidor = cpf ?? null,
+            NomeConsumidor = nome,
+            TributosAproximados = decimal.Parse(tribAprox),
+            TributosFederais = decimal.Parse(tribFed)
         };
 
         retorno.Itens = ParseItens(html);
 
         return retorno;
     }
+
+    private static string LimparTexto(string texto)
+    {
+        texto = HtmlEntity.DeEntitize(texto);
+        texto = Regex.Replace(texto, @"\s+", " ");
+        texto = Regex.Replace(texto, @"\s*,\s*", ", ");
+        return texto.Trim();
+    }
+
+    private static string SomenteNumeros(string texto) => Regex.Replace(texto, @"\D", "");
 }
