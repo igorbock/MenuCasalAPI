@@ -59,8 +59,11 @@ public static class NFCService
         htmlConteudo.LoadHtml(conteudo.InnerHtml);
         // Obtendo informações
         var nomeEmitente = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@id=""u20""]").InnerText.Trim();
-        var cnpjEmitente = SomenteNumeros(LimparTexto(htmlConteudo.DocumentNode.SelectSingleNode(@"//div[1]/div[2]").InnerText));
-        var enderecoEmitente = LimparTexto(htmlConteudo.DocumentNode.SelectSingleNode(@"//div[1]/div[3]").InnerText);
+        //var conteudoCabecalho = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@class=""txtCenter""]").InnerHtml;
+        var teste = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@class=""txtCenter""]/div[2]");
+        var cnpjEmitente = SomenteNumeros(LimparTexto(teste.InnerText));
+        var teste2 = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@class=""txtCenter""]/div[3]");
+        var enderecoEmitente = LimparTexto(teste2.InnerText);
         // Tabela com informações gerais
         var infosHTML = doc.DocumentNode.SelectSingleNode(@"//*[@id=""infos""]");
         //*[@id="infos"]
@@ -79,8 +82,12 @@ public static class NFCService
         // Chave de acesso
         var chaveAcesso = infoGerais.DocumentNode.SelectSingleNode(@"//li/span").InnerText.Trim().Replace(" ", "");
         // Consumidor
-        var cpf = SomenteNumeros(infoGerais.DocumentNode.SelectSingleNode(@"//div[3]/ul/li/text()[1]").InnerText);
-        var nome = infoGerais.DocumentNode.SelectSingleNode(@"div[3]/ul/li[2]/strong").InnerText.Split(":")[1].Trim();
+        var nodeCPF = infoGerais.DocumentNode.SelectSingleNode(@"//div[3]/ul/li/text()[1]");
+        var cpf = SomenteNumeros(nodeCPF?.InnerText ?? string.Empty);
+        var nomeNode = infoGerais.DocumentNode.SelectSingleNode(@"div[3]/ul/li[2]/strong");
+        var nomeRaw = nomeNode?.InnerText ?? string.Empty;
+        var nomeSplit = nomeRaw.Split(":");
+        var nome = nomeSplit.Length <= 1 ? string.Empty : nomeSplit[1].Trim();
         // Informações de interesse do contribuinte
         var infoContribuinteRaw = infoGerais.DocumentNode.SelectSingleNode(@"//div[4]/ul/li").InnerText.Split(" ");
         var tribAprox = infoContribuinteRaw[3];
