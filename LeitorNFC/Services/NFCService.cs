@@ -59,11 +59,10 @@ public static class NFCService
         htmlConteudo.LoadHtml(conteudo.InnerHtml);
         // Obtendo informações
         var nomeEmitente = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@id=""u20""]").InnerText.Trim();
-        //var conteudoCabecalho = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@class=""txtCenter""]").InnerHtml;
-        var teste = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@class=""txtCenter""]/div[2]");
-        var cnpjEmitente = SomenteNumeros(LimparTexto(teste.InnerText));
-        var teste2 = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@class=""txtCenter""]/div[3]");
-        var enderecoEmitente = LimparTexto(teste2.InnerText);
+        var cnpjNode = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@class=""txtCenter""]/div[2]");
+        var cnpjEmitente = SomenteNumeros(LimparTexto(cnpjNode.InnerText));
+        var enderecoNode = htmlConteudo.DocumentNode.SelectSingleNode(@"//*[@class=""txtCenter""]/div[3]");
+        var enderecoEmitente = LimparTexto(enderecoNode.InnerText);
         // Tabela com informações gerais
         var infosHTML = doc.DocumentNode.SelectSingleNode(@"//*[@id=""infos""]");
         //*[@id="infos"]
