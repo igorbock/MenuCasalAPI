@@ -1,29 +1,34 @@
 ﻿namespace LeitorNFC.Models;
 
-[Table("NFC_ITEM", Schema = "NFC")]
+[Table("item", Schema = "nfc")]
 public class ItemNFC : IEntity
 {
     [Key]
+    [Column("id")]
     public long Id { get; set; }
 
     [StringLength(2)]
+    [Column("codigo")]
     public string? Codigo { get; set; }    
     
     [StringLength(255)]
+    [Column("descricao")]
     public required string Descricao { get; set; }
 
-    [Column(TypeName = "decimal(15,4)")]
+    [Column("quantidade", TypeName = "decimal(15,4)")]
     public decimal Quantidade { get; set; }
     
     [StringLength(3)]
+    [Column("unidade")]
     public string? Unidade { get; set; }
 
-    [Column(TypeName = "decimal(15,4)")]
+    [Column("valor_unitario", TypeName = "decimal(15,4)")]
     public decimal ValorUnitario { get; set; }
 
-    [Column(TypeName = "decimal(15,4)")]
+    [Column("valor_total", TypeName = "decimal(15,4)")]
     public decimal ValorTotal { get; set; }
     
     [ForeignKey("NFCCompra")]
+    [Column("id_compra")]
     public int IdCompra { get; set; }
 }
