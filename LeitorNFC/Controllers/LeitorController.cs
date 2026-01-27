@@ -1,7 +1,7 @@
 ﻿namespace LeitorNFC;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class LeitorController : ControllerBase
 {
     private readonly IRepository<NFC> _nfcRepository;

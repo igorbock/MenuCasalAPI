@@ -4,7 +4,7 @@
 public class NFC : IEntity
 {
     [Key]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [StringLength(100)]
     public required string NomeEmitente { get; set; }

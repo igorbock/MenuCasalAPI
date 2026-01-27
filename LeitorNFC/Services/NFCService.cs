@@ -88,9 +88,23 @@ public static class NFCService
         var nomeSplit = nomeRaw.Split(":");
         var nome = nomeSplit.Length <= 1 ? string.Empty : nomeSplit[1].Trim();
         // Informações de interesse do contribuinte
-        var infoContribuinteRaw = infoGerais.DocumentNode.SelectSingleNode(@"//div[4]/ul/li").InnerText.Split(" ");
-        var tribAprox = infoContribuinteRaw[3];
-        var tribFed = infoContribuinteRaw[5];
+        var infoContribuinteNode = infoGerais.DocumentNode.SelectSingleNode(@"//div[4]/ul/li");
+        var infoContribuinteText = infoContribuinteNode?.InnerText ?? string.Empty;
+        var infoContribuinteSplit = infoContribuinteText.Split(" ");
+        var tribAprox = infoContribuinteSplit.Length <= 1 ? string.Empty : infoContribuinteSplit[3];
+        var tribFed = infoContribuinteSplit.Length <= 1 ? string.Empty : infoContribuinteSplit[5];
+
+        int intNumero;
+        DateTime dteEmissao;
+        DateTime dteProtocoloAutorizacao;
+        decimal decTribAprox;
+        decimal decTribFederais;
+
+        int.TryParse(numero, out intNumero);
+        DateTime.TryParse(dataEmissao!, out dteEmissao);
+        DateTime.TryParse(dataProtocoloAutorizacao, out dteProtocoloAutorizacao);
+        decimal.TryParse(tribAprox, out decTribAprox);
+        decimal.TryParse(tribFed, out decTribFederais);
 
         var retorno = new NFC()
         {
@@ -98,17 +112,17 @@ public static class NFCService
             CNPJEmitente = cnpjEmitente,
             EnderecoEmitente = enderecoEmitente,
             TipoEmissao = tipoEmissao,
-            Numero = int.Parse(numero),
+            Numero = intNumero,
             Serie = serie,
-            DataEmissao = DateTime.Parse(dataEmissao!),
+            DataEmissao = dteEmissao,
             ProtocoloAutorizacao = protocoloAutorizacao,
-            DataProtocoloAutorizacao = DateTime.Parse(dataProtocoloAutorizacao),
+            DataProtocoloAutorizacao = dteProtocoloAutorizacao,
             Ambiente = ambiente,
             ChaveAcesso = chaveAcesso!,
             CPFConsumidor = cpf ?? null,
             NomeConsumidor = nome,
-            TributosAproximados = decimal.Parse(tribAprox),
-            TributosFederais = decimal.Parse(tribFed)
+            TributosAproximados = decTribAprox,
+            TributosFederais = decTribFederais
         };
 
         retorno.Itens = ParseItens(html);

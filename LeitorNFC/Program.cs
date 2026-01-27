@@ -7,9 +7,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<DapperDbContext>();
-builder.Services.AddScoped<IRepository<NFC>, CompraNFCRepository>();
-builder.Services.AddScoped<IRepository<ItemNFC>, ItemNFCRepository>();
+builder.Services.AddScoped<IDbConnection>(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+    return new NpgsqlConnection(connectionString);
+});
+builder.Services.AddScoped<IRepository<NFC>, RepositoryGenerico<NFC>>();
+builder.Services.AddScoped<IRepository<ItemNFC>, RepositoryGenerico<ItemNFC>>();
 
 var app = builder.Build();
 

@@ -4,7 +4,7 @@
 public class ItemNFC : IEntity
 {
     [Key]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [StringLength(2)]
     public string? Codigo { get; set; }    
@@ -26,6 +26,4 @@ public class ItemNFC : IEntity
     
     [ForeignKey("NFCCompra")]
     public int IdCompra { get; set; }
-
-    public NFC? NFCCompra { get; set; }
 }

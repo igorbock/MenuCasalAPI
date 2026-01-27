@@ -2,9 +2,9 @@
 
 public interface IRepository<TypeT> where TypeT : IEntity
 {
-    public TypeT GetById(int id);
-    public Task<IEnumerable<TypeT>> GetAllAsync(Func<TypeT, bool>? predicate = null);
-    public Task AddAsync(TypeT entity);
-    public void Update(TypeT entity);
-    public void Delete(int id);
+    public Task<TypeT> GetAsync(long id);
+    public Task<IEnumerable<TypeT>> GetAsync();
+    public Task<long> AddAsync(TypeT entity);
+    public Task UpdateAsync(TypeT entity);
+    public Task DeleteAsync(long id);
 }
