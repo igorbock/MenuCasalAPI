@@ -7,7 +7,7 @@ public class ItemNFC : IEntity
     [Column("id")]
     public long Id { get; set; }
 
-    [StringLength(2)]
+    [StringLength(10)]
     [Column("codigo")]
     public string? Codigo { get; set; }    
     
@@ -28,7 +28,6 @@ public class ItemNFC : IEntity
     [Column("valor_total", TypeName = "decimal(15,4)")]
     public decimal ValorTotal { get; set; }
     
-    [ForeignKey("NFCCompra")]
     [Column("id_compra")]
     public int IdCompra { get; set; }
 }

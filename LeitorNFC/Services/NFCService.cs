@@ -1,10 +1,31 @@
-﻿using System.Text.RegularExpressions;
+﻿namespace LeitorNFC.Services;
 
-namespace LeitorNFC.Services;
-
-public static class NFCService
+public class NFCService : INFCService
 {
-    public static List<ItemNFC> ParseItens(string html)
+    private NFC? _compra;
+    public NFC Compra
+    {
+        get => _compra ?? new NFC();
+        set => _compra = value;
+    }
+
+    private IEnumerable<ItemNFC>? _itens;
+    public IEnumerable<ItemNFC> Itens
+    {
+        get => _itens ?? new List<ItemNFC>();
+        set => _itens = value;
+    }
+
+    private readonly IRepository<NFC> _nfcRepository;
+    private readonly IRepository<ItemNFC> _itemNFCRepository;
+
+    public NFCService(IRepository<NFC> nfcRepository, IRepository<ItemNFC> itemNFCRepository)
+    {
+        _nfcRepository = nfcRepository;
+        _itemNFCRepository = itemNFCRepository;
+    }
+
+    public IEnumerable<ItemNFC> ParseItens(string html)
     {
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
@@ -47,8 +68,8 @@ public static class NFCService
 
         return itens;
     }
-
-    public static NFC ParseNFC(string html)
+     
+    public NFC ParseNFC(string html)
     {
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
@@ -125,9 +146,14 @@ public static class NFCService
             TributosFederais = decTribFederais
         };
 
-        retorno.Itens = ParseItens(html);
+        retorno.Itens = ParseItens(html).ToList();
 
         return retorno;
+    }
+
+    public Task<NFC> SalvarNFCAsync(string htmlNFC)
+    {
+        throw new NotImplementedException();
     }
 
     private static string LimparTexto(string texto)

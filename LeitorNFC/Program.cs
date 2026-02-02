@@ -16,6 +16,7 @@ builder.Services.AddScoped<IDbConnection>(sp =>
 });
 builder.Services.AddScoped<IRepository<NFC>, RepositoryGenerico<NFC>>();
 builder.Services.AddScoped<IRepository<ItemNFC>, RepositoryGenerico<ItemNFC>>();
+builder.Services.AddScoped<INFCService, NFCService>();
 
 var app = builder.Build();
 
