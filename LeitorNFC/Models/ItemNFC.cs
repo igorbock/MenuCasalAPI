@@ -1,6 +1,7 @@
 ﻿namespace LeitorNFC.Models;
 
 [Table("item", Schema = "nfc")]
+[Sequence("seq_nfc_item", Schema = "nfc")]
 public class ItemNFC : IEntity
 {
     [Key]
@@ -29,5 +30,5 @@ public class ItemNFC : IEntity
     public decimal ValorTotal { get; set; }
     
     [Column("id_compra")]
-    public int IdCompra { get; set; }
+    public long IdCompra { get; set; }
 }

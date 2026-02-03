@@ -18,7 +18,8 @@ public class LeitorController : ControllerBase
     {
         var retornoHTTP = await _httpClient.GetAsync(urlNFC);
         var retornoHTML = await retornoHTTP.Content.ReadAsStringAsync();
-        var nfc = _nfcService.ParseNFC(retornoHTML);
+        //var nfc = _nfcService.ParseNFC(retornoHTML);
+        var nfc = await _nfcService.SalvarNFCAsync(retornoHTML);
         //var nfc_banco = (await _nfcRepository.GetAsync()).Where(a => a.ChaveAcesso == nfc.ChaveAcesso);
         //if (nfc_banco.Any())
         //    return BadRequest("A NFC já está cadastrada");

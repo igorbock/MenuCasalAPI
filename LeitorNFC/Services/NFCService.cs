@@ -18,11 +18,13 @@ public class NFCService : INFCService
 
     private readonly IRepository<NFC> _nfcRepository;
     private readonly IRepository<ItemNFC> _itemNFCRepository;
+    private readonly IDbConnection _dbConnection;
 
-    public NFCService(IRepository<NFC> nfcRepository, IRepository<ItemNFC> itemNFCRepository)
+    public NFCService(IRepository<NFC> nfcRepository, IRepository<ItemNFC> itemNFCRepository, IDbConnection dbConnection)
     {
         _nfcRepository = nfcRepository;
         _itemNFCRepository = itemNFCRepository;
+        _dbConnection = dbConnection;
     }
 
     public IEnumerable<ItemNFC> ParseItens(string html)
@@ -151,9 +153,43 @@ public class NFCService : INFCService
         return retorno;
     }
 
-    public Task<NFC> SalvarNFCAsync(string htmlNFC)
+    public async Task<NFC> SalvarNFCAsync(string htmlNFC)
     {
-        throw new NotImplementedException();
+        _dbConnection.Open();
+        var conn = _dbConnection.BeginTransaction();
+        try
+        {
+            //Transação NFC
+            //1.Validação da NFC
+            var nfc = ParseNFC(htmlNFC);
+            var nfc_banco = (await _nfcRepository.GetAsync()).Where(a => a.ChaveAcesso == nfc.ChaveAcesso);
+            if (nfc_banco.Any())
+                throw new Exception("A NFC já está cadastrada");
+            if (nfc.Itens == null)
+                throw new Exception("A NFC não tem itens");
+            //2.Salva informações da compra(cabeçalho) e retorna ID
+            var novo_id = await _nfcRepository.AddAsync(nfc, conn);
+            //3.Coloca o ID nos itens e salva cada um deles
+            if (nfc.Itens != null)
+            {
+                nfc.Itens.ForEach(a => a.IdCompra = novo_id);
+                nfc.Itens.ForEach(async a => await _itemNFCRepository.AddAsync(a, conn));
+            }
+            //4.Em sucesso retorna com mensagem de aviso
+            conn.Commit();
+            return nfc;
+        }
+        catch (Exception)
+        {
+            //5.Em caso de algum erro a transação sofre rollback e retorna mensagem
+            conn.Rollback();
+            throw;
+        }
+        finally
+        {
+            conn.Dispose();
+            _dbConnection.Close();
+        }
     }
 
     private static string LimparTexto(string texto)

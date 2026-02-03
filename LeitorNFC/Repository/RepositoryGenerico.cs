@@ -11,14 +11,14 @@ public class RepositoryGenerico<TEntity> : DapperRepositoryAbstract, IRepository
 
     public RepositoryGenerico(IDbConnection connection) : base(connection) { }
 
-    public async Task<long> AddAsync(TEntity entity)
+    public async Task<long> AddAsync(TEntity entity, IDbTransaction? transaction = null)
     {
-        entity.Id = await QuerySingleAsync<long>(SequenceSql);
+        entity.Id = await QuerySingleAsync<long>(SequenceSql, transaction: transaction);
         await ExecuteAsync(InsertSql, entity);
         return entity.Id;
     }
-    public Task UpdateAsync(TEntity entity) => ExecuteAsync(UpdateSql, entity);
-    public Task DeleteAsync(long id) => ExecuteAsync(DeleteSql, new { id });
+    public Task UpdateAsync(TEntity entity, IDbTransaction? transaction = null) => ExecuteAsync(UpdateSql, entity, transaction);
+    public Task DeleteAsync(long id, IDbTransaction? transaction = null) => ExecuteAsync(DeleteSql, new { id }, transaction);
     public Task<TEntity> GetAsync(long id) => QuerySingleAsync<TEntity>(GetByIdSql, new { id });
     public Task<IEnumerable<TEntity>> GetAsync() => QueryAsync<TEntity>(GetAllSql);
 }

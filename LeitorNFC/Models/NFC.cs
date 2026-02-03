@@ -1,6 +1,7 @@
 ﻿namespace LeitorNFC.Models;
 
 [Table("compra", Schema = "nfc")]
+[Sequence("seq_nfc_compra", Schema = "nfc")]
 public class NFC : IEntity
 {
     [Key]
