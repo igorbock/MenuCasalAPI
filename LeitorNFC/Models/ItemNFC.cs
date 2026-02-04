@@ -14,12 +14,12 @@ public class ItemNFC : IEntity
     
     [StringLength(255)]
     [Column("descricao")]
-    public required string Descricao { get; set; }
+    public string? Descricao { get; set; }
 
     [Column("quantidade", TypeName = "decimal(15,4)")]
     public decimal Quantidade { get; set; }
     
-    [StringLength(3)]
+    [StringLength(20)]
     [Column("unidade")]
     public string? Unidade { get; set; }
 

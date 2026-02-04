@@ -162,7 +162,8 @@ public class NFCService : INFCService
             //Transação NFC
             //1.Validação da NFC
             var nfc = ParseNFC(htmlNFC);
-            var nfc_banco = (await _nfcRepository.GetAsync()).Where(a => a.ChaveAcesso == nfc.ChaveAcesso);
+            var nfcs = await _nfcRepository.GetAsync();
+            var nfc_banco = nfcs.Where(a => a.ChaveAcesso.Trim() == nfc.ChaveAcesso.Trim()).ToList();
             if (nfc_banco.Any())
                 throw new Exception("A NFC já está cadastrada");
             if (nfc.Itens == null)
@@ -173,7 +174,8 @@ public class NFCService : INFCService
             if (nfc.Itens != null)
             {
                 nfc.Itens.ForEach(a => a.IdCompra = novo_id);
-                nfc.Itens.ForEach(async a => await _itemNFCRepository.AddAsync(a, conn));
+                foreach(var item in nfc.Itens)
+                    await _itemNFCRepository.AddAsync(item, conn);
             }
             //4.Em sucesso retorna com mensagem de aviso
             conn.Commit();
@@ -182,6 +184,7 @@ public class NFCService : INFCService
         catch (Exception)
         {
             //5.Em caso de algum erro a transação sofre rollback e retorna mensagem
+            
             conn.Rollback();
             throw;
         }

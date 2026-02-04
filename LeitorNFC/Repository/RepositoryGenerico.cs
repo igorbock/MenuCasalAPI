@@ -1,6 +1,6 @@
 ﻿namespace LeitorNFC.Repository;
 
-public class RepositoryGenerico<TEntity> : DapperRepositoryAbstract, IRepository<TEntity> where TEntity : class, IEntity
+public class RepositoryGenerico<TEntity> : DapperRepositoryAbstract, IRepository<TEntity> where TEntity : class, IEntity, new()
 {
     private static readonly string InsertSql = SqlBuilderHelper.BuildInsert<TEntity>();
     private static readonly string UpdateSql = SqlBuilderHelper.BuildUpdate<TEntity>();

@@ -41,7 +41,7 @@ public class NFC : IEntity
     [Column("data_protocolo_autorizacao")]
     public DateTime? DataProtocoloAutorizacao { get; set; }
 
-    [StringLength(20)]
+    [StringLength(100)]
     [Column("ambiente")]
     public string? Ambiente { get; set; }
 
