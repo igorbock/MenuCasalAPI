@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LeitorNFC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d50f0e6a5247c053d05e6545a84fbb3c10591219")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14d2ac8166255dc837bac547417d23c7819bd5d9")]
 [assembly: System.Reflection.AssemblyProductAttribute("LeitorNFC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LeitorNFC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

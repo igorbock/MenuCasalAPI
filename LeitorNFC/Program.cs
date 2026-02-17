@@ -8,6 +8,12 @@ DefaultTypeMap.MatchNamesWithUnderscores = true;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
+builder.Services.AddHttpClient("LeitorNFC", client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(30);
+    client.BaseAddress = new Uri("https://router.huggingface.co/v1/");
+    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {builder.Configuration["HUGGINGFACE_API_KEY"]}");
+});
 
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IDbConnection>(sp =>

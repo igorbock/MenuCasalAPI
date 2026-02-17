@@ -22,7 +22,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net9.0"
+          "net10.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -33,8 +33,8 @@
           "https://nuget.devexpress.com/fesfkHuiIsdDyCM7YP5THdbHS1okiYVtlUAXZ584LLuPDdDd5H/api/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
+          "net10.0": {
+            "targetAlias": "net10.0",
             "projectReferences": {}
           }
         },
@@ -46,13 +46,13 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
+          "auditMode": "all"
         },
         "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net10.0": {
+          "targetAlias": "net10.0",
           "dependencies": {
             "Dapper": {
               "target": "Package",
@@ -64,11 +64,11 @@
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[9.0.11, )"
+              "version": "[10.0.3, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[10.0.1, )"
+              "version": "[10.0.3, )"
             },
             "Npgsql": {
               "target": "Package",
@@ -76,7 +76,7 @@
             },
             "Scalar.AspNetCore": {
               "target": "Package",
-              "version": "[2.11.10, )"
+              "version": "[2.12.40, )"
             }
           },
           "imports": [
@@ -98,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
